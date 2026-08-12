@@ -66,17 +66,7 @@ html, body {
 }
 </style>
 
-<style>
-body {
-  background: black;
-}
-.my-photo {
-  width: 180px;
-  opacity: 1;
-  filter: brightness(1.25) contrast(1.15);
-
-}
-</style></head>
+</head>
 
 <body>
 
@@ -86,8 +76,9 @@ function createPhoto() {
 
     let img = document.createElement("img");
 
-</body>
-</html>
+    img.src = "photo.jpg";
+
+    img.className = "photo";
 
     let size = 70 + Math.random() * 70;
 
@@ -137,5 +128,5 @@ setInterval(createPhoto, 500);
 
 </script>
 
-<img src="photo.jpg" class="my-photo"></body>
+</body>
 </html>
