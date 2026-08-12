@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,33 +17,30 @@ html, body {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background: #000;
+    background: black;
 }
 
-.heart {
+.photo {
     position: fixed;
-    bottom: -80px;
-    left: 0;
-    user-select: none;
+    bottom: -180px;
+
+    width: 110px;
+    height: 145px;
+
+    object-fit: cover;
+    border-radius: 18px;
+
+    box-shadow: 0 0 15px rgba(255,255,255,0.25);
+
+    animation: fly linear forwards;
+
     pointer-events: none;
-
-    animation-name: float;
-    animation-timing-function: linear;
-    animation-fill-mode: forwards;
-
-    filter:
-        drop-shadow(0 0 6px rgba(255,0,50,.8))
-        drop-shadow(0 0 14px rgba(255,0,50,.5));
 }
 
-@keyframes float {
+@keyframes fly {
 
     0% {
-        transform:
-            translate3d(0, 0, 0)
-            rotate(0deg)
-            scale(.7);
-
+        transform: translate(0,0) rotate(0deg) scale(.6);
         opacity: 0;
     }
 
@@ -53,75 +50,81 @@ html, body {
 
     50% {
         transform:
-            translate3d(var(--move), -55vh, 0)
-            rotate(180deg)
-            scale(1);
+        translate(var(--x1),-55vh)
+        rotate(var(--r1))
+        scale(1);
     }
 
     100% {
         transform:
-            translate3d(var(--move2), -120vh, 0)
-            rotate(360deg)
-            scale(.8);
+        translate(var(--x2),-125vh)
+        rotate(var(--r2))
+        scale(.75);
 
         opacity: 0;
     }
 }
 </style>
+
 </head>
 
 <body>
 
 <script>
 
-function createHeart() {
+function createPhoto() {
 
-    const heart = document.createElement("div");
+    let img = document.createElement("img");
 
-    heart.className = "heart";
-    heart.innerHTML = "❤️";
+    img.src = "photo.jpg";
 
-    // Random position
-    heart.style.left = Math.random() * 100 + "vw";
+    img.className = "photo";
 
-    // Random size
-    heart.style.fontSize =
-        (15 + Math.random() * 55) + "px";
+    let size = 70 + Math.random() * 70;
 
-    // Random movement
-    heart.style.setProperty(
-        "--move",
+    img.style.width = size + "px";
+    img.style.height = (size * 1.3) + "px";
+
+    img.style.left =
+        Math.random() * 100 + "vw";
+
+    img.style.setProperty(
+        "--x1",
         (-100 + Math.random() * 200) + "px"
     );
 
-    heart.style.setProperty(
-        "--move2",
-        (-180 + Math.random() * 360) + "px"
+    img.style.setProperty(
+        "--x2",
+        (-200 + Math.random() * 400) + "px"
     );
 
-    // Random speed
-    const duration =
-        4 + Math.random() * 5;
+    img.style.setProperty(
+        "--r1",
+        (-20 + Math.random() * 40) + "deg"
+    );
 
-    heart.style.animationDuration =
-        duration + "s";
+    img.style.setProperty(
+        "--r2",
+        (-40 + Math.random() * 80) + "deg"
+    );
 
-    document.body.appendChild(heart);
+    let speed = 5 + Math.random() * 4;
 
-    setTimeout(() => {
-        heart.remove();
-    }, duration * 1000);
+    img.style.animationDuration = speed + "s";
+
+    document.body.appendChild(img);
+
+    setTimeout(function() {
+        img.remove();
+    }, speed * 1000);
 }
 
 
-// Create hearts continuously
-setInterval(createHeart, 100);
-
-
-// Create some immediately
-for (let i = 0; i < 20; i++) {
-    setTimeout(createHeart, i * 100);
+for (let i = 0; i < 12; i++) {
+    setTimeout(createPhoto, i * 300);
 }
+
+setInterval(createPhoto, 500);
 
 </script>
 
